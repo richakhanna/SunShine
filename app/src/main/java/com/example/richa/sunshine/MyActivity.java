@@ -11,7 +11,7 @@ import android.view.MenuItem;
 
 public class MyActivity extends ActionBarActivity {
 
-    private final String LOG_TAG= MyActivity.class.getSimpleName();
+    private final String LOG_TAG = MyActivity.class.getSimpleName();
 
     private final String FORECASTFRAGMENT_TAG = "FFTAG";
 
@@ -44,34 +44,34 @@ public class MyActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            Intent intent=new Intent(this,SettingsActivity.class);
+            Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
             return true;
         }
 
-        if(id==R.id.action_map){
+        if (id == R.id.action_map) {
             openPreferredLocationInMap();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void openPreferredLocationInMap(){
+    private void openPreferredLocationInMap() {
         String location = Utility.getPreferredLocation(this);
 
 
         //Using the Uri scheme provided in Common Intent doc under Map section
 
-        Uri geolocation=Uri.parse("geo:0,0?").buildUpon()
-                         .appendQueryParameter("q",location)
-                         .build();
-        Intent intent=new Intent(Intent.ACTION_VIEW);
+        Uri geolocation = Uri.parse("geo:0,0?").buildUpon()
+                .appendQueryParameter("q", location)
+                .build();
+        Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(geolocation);
 
         //We only start the activity if it resolves successfully
-        if(intent.resolveActivity(getPackageManager())!=null){
+        if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
-        }else{
-            Log.d(LOG_TAG,"Couldn't call " + location );
+        } else {
+            Log.d(LOG_TAG, "Couldn't call " + location);
         }
 
     }
@@ -79,11 +79,11 @@ public class MyActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        String location = Utility.getPreferredLocation( this );
+        String location = Utility.getPreferredLocation(this);
         // update the location in our second pane using the fragment manager
         if (location != null && !location.equals(mLocation)) {
-            ForecastFragment ff = (ForecastFragment)getSupportFragmentManager().findFragmentByTag(FORECASTFRAGMENT_TAG);
-            if ( null != ff ) {
+            ForecastFragment ff = (ForecastFragment) getSupportFragmentManager().findFragmentByTag(FORECASTFRAGMENT_TAG);
+            if (null != ff) {
                 ff.onLocationChanged();
             }
             mLocation = location;
